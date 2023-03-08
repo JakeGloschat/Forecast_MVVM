@@ -18,7 +18,7 @@ class NetworkingContoller {
         urlComponents?.path = "/v2.0/forecast/daily"
         
         let apiQuery = URLQueryItem(name: "key", value: "8503276d5f49474f953722fa0a8e7ef8")
-        let cityQuery = URLQueryItem(name: "city", value:"Salt Lake")
+        let cityQuery = URLQueryItem(name: "city", value:"Colorado Springs")
         let unitsQuery = URLQueryItem(name: "units", value: "I")
         urlComponents?.queryItems = [apiQuery,cityQuery,unitsQuery]
         

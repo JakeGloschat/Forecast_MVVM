@@ -12,32 +12,29 @@ protocol DayDetailViewModelDelegate: DayDetailsViewController {
 }
 
 class DayDetailViewModel {
- 
     var forcastData: TopLevelDictionary?
     var days: [Day] {
         forcastData?.days ?? []
     }
     
    private weak var delegate: DayDetailViewModelDelegate?
+    var service: ForecastServiceable
     
-    private let networkingController: NetworkingContoller
-    
-    init(delegate: DayDetailViewModelDelegate, networkController: NetworkingContoller = NetworkingContoller()) {
+    init(delegate: DayDetailViewModelDelegate, forecastServiceable: ForecastServiceable = ForecastService()) {
         self.delegate = delegate
-        self.networkingController = networkController
-        fetchForecastData()
+        self.service = forecastServiceable
+        self.fetchForecastData()
     }
     
     private func fetchForecastData() {
-        NetworkingContoller.fetchDays { result in
+        service.fetchDays(with: .cityForecast ) { result in
             switch result {
             case .success(let success):
                 self.forcastData = success
                 self.delegate?.updateViews()
             case .failure(let error):
-                print(ResultError.thrownError(error))
+                print(NetworkError.thrownError(error))
             }
         }
     }
-    
 }
